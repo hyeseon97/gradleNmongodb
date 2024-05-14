@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  spring-boot-gradle1:
+    container_name: serviceId12345
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mydatabase
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: databaseId12345
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/var/lib/mongodb
+
+volumes:
+  mongodb-data:
