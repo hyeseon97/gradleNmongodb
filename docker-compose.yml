@@ -1,25 +1,36 @@
-version: '3.8'
+version: "3.8"
 services:
-  spring-boot-gradle1:
-    container_name: serviceId12345
+  spring-boot-gradled1a2cc4a-52bf-466f-96ce-5ca32b61fb5c:
+    container_name: d1a2cc4a-52bf-466f-96ce-5ca32b61fb5c
     build:
       context: ./backend
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mydatabase
     depends_on:
-      - mongo
-
-  mongo:
-    container_name: databaseId12345
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://hyeseoni:aaa@mongodb:27018/testdb
+      MONGO_INITDB_ROOT_USERNAME: hyeseoni
+      MONGO_INITDB_ROOT_PASSWORD: aaa
+      CORS_ALLOWED_ORIGIN: http://13.124.154.154:0
+    networks:
+      - dobie
+  mongodb:
+    container_name: 21d37912-1a02-4063-8c7b-9894de680314
     image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: hyeseoni
+      MONGO_INITDB_ROOT_PASSWORD: aaa
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongodb-data:/var/lib/mongodb
-
+    networks:
+      - dobie
 volumes:
   mongodb-data:
+networks: 
+  dobie: 
+    external: true 
